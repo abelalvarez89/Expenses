@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="expenses">
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<script type="text/javascript" src="lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+</head>
+<body>
+
+<div ng-controller="OutputController as test">
+{{test.products.comments}}
+</div>
+
+<div ng-controller="LocationController as loc">
+{{loc.productObj.location}}
+</div>
+
+
+<h1>Expenses</h1>
+
+<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(1, 2, 3)">
+<button type="submit" ng-click="loc.doSomething()">Log Purchase</button>
+</form>
+
+
+<div ng-controller="LocationController as loc">
+	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(loc.productObj)">
+	
+		<blockquote>
+			<table border="3" style="width=100%" >
+					<td>
+						Location
+					</td>
+					<td>
+						Amount
+					</td>
+					<td>
+						Date
+					</td>
+				<tr>
+					<td>
+						<select ng-model="store" >
+							<option ng-repeat="lc in loc.productObj.location" value="{{lc}}">{{lc}}</option>
+						</select >	
+						
+					</td>
+					<td>
+						<input type="number" min="0" ng-model="amount"></input>
+					</td>
+
+					<td>
+						<button type="button" ng-click="loc.getDate()">Today's Date</button>
+				
+					</td>
+				<tr>
+					<td>
+						{{store}}
+					</td>
+					<td>
+						{{amount}}
+					</td>
+					<td>
+						<div ng-show = "loc.productObj.showDate">
+							{{loc.productObj.date}}
+						<div>
+					</td>
+				</table>
+			<button type="submit" >Log Purchase</button>
+		</blockquote>
+	</form>
+
+
+<h1>
+Comments here<br>
+{{outputObj.comments}}
+</h1>
+</div>
+
+
+</body>
+</html>
