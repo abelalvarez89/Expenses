@@ -2,6 +2,7 @@
 <html ng-app="expenses">
 <head>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/custom.css"/>
 	<script type="text/javascript" src="lib/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 </head>
@@ -27,7 +28,7 @@
 	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(loc.productObj)">
 	
 		<blockquote>
-			<table border="3" style="width=100%" >
+			<table class="CSSTableGenerator" border="3" style="width=100%" >
 					<td>
 						Location
 					</td>
@@ -72,7 +73,7 @@
 
 <h1>
 Comments here<br>
-{{outputObj.comments}}
+{{loc}}
 </h1>
 </div>
 

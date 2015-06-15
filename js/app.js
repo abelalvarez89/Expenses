@@ -3,7 +3,6 @@ var app = angular.module('expenses', []);
 
 app.controller("OutputController", function(){
 	this.product = outputObj;
-
 });
 	
 app.controller("LocationController", function(){
@@ -33,10 +32,7 @@ var expensesObject = {
 	'McDonald','Panda Express','Papa Johns',
 	'Pizza Hut','Publix','Shell','Subway',
 	'Walmart'
-	]	,
-	comments:[
-		
-		]
+	]
 };
 
 var outputObj = {
