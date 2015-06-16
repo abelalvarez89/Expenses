@@ -8,9 +8,7 @@
 </head>
 <body>
 
-<div ng-controller="OutputController as test">
-{{test.products.comments}}
-</div>
+
 
 <div ng-controller="LocationController as loc">
 {{loc.productObj.location}}
@@ -18,10 +16,6 @@
 
 
 <h1>Expenses</h1>
-
-<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(1, 2, 3)">
-<button type="submit" ng-click="loc.doSomething()">Log Purchase</button>
-</form>
 
 
 <div ng-controller="LocationController as loc">
@@ -46,7 +40,7 @@
 						
 					</td>
 					<td>
-						<input type="number" min="0" ng-model="amount"></input>
+						<input type="number" step="0.01" min="0" ng-model="amount"></input>
 					</td>
 
 					<td>
@@ -58,7 +52,7 @@
 						{{store}}
 					</td>
 					<td>
-						{{amount}}
+						{{review.amount = amount}}
 					</td>
 					<td>
 						<div ng-show = "loc.productObj.showDate">
@@ -66,15 +60,45 @@
 						<div>
 					</td>
 				</table>
-			<button type="submit" >Log Purchase</button>
+				<br></br>
+			<button type="submit" ng-click="reviewCtrl.setValues(store, amount, loc.productObj.date)">Log Purchase</button>
 		</blockquote>
 	</form>
 
 
 <h1>
-Comments here<br>
-{{loc}}
+Comments here
 </h1>
+
+<div ng-controller="LocationController as loc">
+	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(loc.productObj)">
+	
+		<blockquote>
+			<table class="CSSTableGenerator" border="3" style="width=100%" >
+					<td>
+						Location
+					</td>
+					<td>
+						Amount
+					</td>
+					<td>
+						Date
+					</td>
+				<tr>
+					<td>
+						
+						
+					</td>
+					<td>
+						
+					</td>
+					<td>
+						
+				
+					</td>
+				</table>
+		</blockquote>
+	</form>
 </div>
 
 
