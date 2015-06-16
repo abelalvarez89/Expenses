@@ -10,11 +10,6 @@
 
 
 
-<div ng-controller="LocationController as loc">
-{{loc.productObj.location}}
-</div>
-
-
 <h1>Expenses</h1>
 
 
@@ -64,14 +59,15 @@
 			<button type="submit" ng-click="reviewCtrl.setValues(store, amount, loc.productObj.date)">Log Purchase</button>
 		</blockquote>
 	</form>
+</div>
 
 
 <h1>
 Comments here
 </h1>
 
-<div ng-controller="LocationController as loc">
-	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(loc.productObj)">
+
+	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl">
 	
 		<blockquote>
 			<table class="CSSTableGenerator" border="3" style="width=100%" >
@@ -84,22 +80,22 @@ Comments here
 					<td>
 						Date
 					</td>
-				<tr>
-					<td>
-						
-						
+				<tr ng-repeat="rc in reviewCtrl.outputObj">
+					<td>	
+						{{rc.store}}		
 					</td>
 					<td>
-						
+						{{rc.total}}
 					</td>
 					<td>
-						
+						{{rc.date}}				
+					</td>
+				</tr>
+				</tbody>
 				
-					</td>
 				</table>
 		</blockquote>
 	</form>
-</div>
 
 
 </body>

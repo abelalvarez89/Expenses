@@ -8,7 +8,9 @@ this.productObj = expensesObject;
 
 this.getDate = function(){
 	this.productObj.showDate = true;
-	this.productObj.date = new Date();
+
+	var x = new Date();
+	this.productObj.date = x.toLocaleString();
 };
 
 });
@@ -16,7 +18,7 @@ this.getDate = function(){
 app.controller('ReviewController', function() {
   this.review = {};
   this.outputObj = localObj;
-
+ 
   
   this.setValues = function(indexs, totals, dates){
   	if(typeof(localStorage.indexing) == "undefined"){
@@ -29,23 +31,45 @@ app.controller('ReviewController', function() {
   	localStorage.date = dates;
   }
 
+  	this.showOutput = function(){
+  		
+	  	var str = JSON.parse(localStorage["testing"]);
+
+	  	var res = str.split("%n");
+	  	var i = 0;
+	  	this.outputObj = [];
+	  
+	  	for (i = 1; i < res.length; i++) { 
+	  		var temp = {
+	  			store: {},
+				total: {},
+				date: {}
+			};
+	      	var x = res[i].split("%e");
+		  	temp.store = x[0];
+		  	var noComma = x[1].split(",");
+		  	temp.total = noComma[noComma.length-1];
+		  	noComma = x[2].split(",");
+		  	temp.date = noComma[noComma.length-1];
+		  	this.outputObj.push(temp);
+		}
+  	}
+  	if(localStorage.indexing == "0"){
+  		this.showOutput();
+  	}
+
     this.addReview = function(product) {
-    if(typeof(indexAt) == "undefined") {
-    	localStorage.indexAt = 0;
-    }
-  	this.outputObj.total = "Publix";
-  	var values = [localStorage.store + "%e", localStorage.total + "%e", localStorage.date + "%e"];
+    	if(localStorage.store == "undefined"){
+    		this.showOutput();
+    		return;
+    	}
+    	var values = [localStorage.store + "%e", localStorage.total + "%e", localStorage.date];
 
-  	var newArray = JSON.parse(localStorage["testing"]);
-  	localStorage["testing"] = JSON.stringify(newArray + "%n" + values);
-
-
-  	//stopping here. This will be used to look up completed trasactions
-  	var str = JSON.parse(localStorage["testing"]);
-
-  	var res = str.split("%n");
-  	
-  };
+  		var newArray = JSON.parse(localStorage["testing"]);
+  		localStorage["testing"] = JSON.stringify(newArray + "%n" + values);
+		this.showOutput();
+		location.reload();
+	};
 });
 
 var expensesObject = {
@@ -53,16 +77,18 @@ var expensesObject = {
 
 	date: new Date(),
 
-	location: ['Chipotle','Home Depot',
+	location: ['Babys R Us','Chipotle','Home Depot',
 	'McDonald','Panda Express','Papa Johns',
 	'Pizza Hut','Publix','Shell','Subway',
-	'Walmart'
+	'Walmart','Other'
 	]
 };
 
-var localObj = {
-	store: "",
-	total: ''
+var localObj = []
+var val = {
+	store: {},
+	total: {},
+	date: {}
 
 }
 

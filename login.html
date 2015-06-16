@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="storeApp">
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/custom.css"/>
+	<script type="text/javascript" src="lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="js/appControllers.js"></script>
+</head>
+<body>
+
+
+	<blockquote >
+		Expenses
+	</blockquote>
+	 <form name="expensesForm" ng-controller="FormController as fc" ng-submit="fc.addValues()">
+		<blockquote ng-controller="StoreController as sctrl">
+			<div ng-controller="DateController as dctrl">
+				<table border="3" style="width=100%" >
+					<thead>
+						<tr>
+							<th>
+								Location
+							</th>
+							<th>
+								Amount
+							</th>
+							<th>
+								Date
+							</th>
+						</tr>
+					</thead>
+					<tbody >
+						<tr>
+							<td>
+							<select ng-model="store">
+								<option  ng-repeat="sc in sctrl.stores" value="{{sc}}">{{sc}}</option>
+							</select >
+							</td>
+							<td>
+								<input type="number" step="0.01" ng-model="amount" min="0" ng-model="amount"></input>
+							</td>
+							<td>
+									<button type="button" ng-click="dctrl.getDate()">Get Date</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								{{store}}
+							</td>
+							<td>
+								{{amount}}
+							</td>
+							<td>
+								{{dctrl.date}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+				<button  class="btn btn-primary" type="submit" ng-click="fc.setValues(store,amount,dctrl.date)">Log Purchase</button>
+			</div>
+		</blockquote>
+	</form>
+		<blockquote>
+			<table border="3" style="width=100%" >
+				<thead>
+					<tr>
+						<th>
+							Location
+						</th>
+						<th>
+							Amount
+						</th>
+						<th>
+							Date
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							{{store}}					
+						</td>
+						<td>
+							{{amount}}
+						</td>
+						<td>
+							<div ng-controller="DateController as dctrl">
+								{{dctrl.date}}
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+		</blockquote>
+
+</body>
+</html>
+
