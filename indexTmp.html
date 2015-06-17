@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="expenses">
 <head>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="css/custom.css"/>
 	<script type="text/javascript" src="lib/angular/angular.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
-
-
 
 <div ng-controller="LocationController as loc">
 	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(loc.productObj)">
@@ -29,19 +27,22 @@
 					</td>
 				<tr>
 					<td>
-						<select ng-model="store" >
+						<select ng-model="store">
 							<option ng-repeat="lc in loc.productObj.location" value="{{lc}}">{{lc}}</option>
 						</select >	
-						<div  ng-show="loc.isOther(store)">
-							<input ng-model="other" type="text">
+						<br>
+						<div class="col-xs-3">
+						</div>
+						<div  ng-show="loc.isOther(store)"  class="col-xs-6">
+							<input ng-model="other" type="text" size="50" class="form-control" placeholder="Enter Store" aria-describedby="basic-addon2">
 						</div>
 					</td>
-					<td align="right">
-						<input type="number" size="5" step="0.01" min="0" ng-model="amount"></input>
+					<td >
+						<input type="number"  class="col-xs-3" size="5" step="0.01" min="0" ng-model="amount"></input>
 					</td>
 
 					<td>
-						<button type="button" ng-click="loc.getDate()">Today's-Date</button>
+						<button type="button" class="btn btn-primary" ng-click="loc.getDate()">Today's-Date</button>
 				
 					</td>
 				<tr>
@@ -58,8 +59,8 @@
 					</td>
 				</table>
 				<br></br>
-			<button type="submit" ng-click="reviewCtrl.setValues(store,other, amount, loc.productObj.date)">Log Purchase</button>
-			<br></br>
+			<button class="btn btn-primary" type="submit" ng-click="reviewCtrl.setValues(store,other, amount, loc.productObj.date)">Log Purchase</button>
+			<br>
 			<div ng-show="reviewCtrl.shouldClear()">
 			<h2>Purchase Items</h2>
 			<table class="CSSTableGenerator" border="3" style="width=100%" >
@@ -85,11 +86,12 @@
 				</tr>
 				</tbody>
 			</table>
-			<button type="button" ng-click="reviewCtrl.cleanHistory()">Clear</button>
+			<br>
+			<button class="btn btn-danger" type="button" ng-click="reviewCtrl.cleanHistory()">Clear</button>
 		</div>
 		</blockquote>
 	</form>
 
-
+	
 </body>
 </html>

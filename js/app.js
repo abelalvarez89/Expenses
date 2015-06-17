@@ -4,18 +4,18 @@ var app = angular.module('expenses', []);
 
 app.controller("LocationController", function(){
 
-this.productObj = expensesObject;
+	this.productObj = expensesObject;
 
-this.getDate = function(){
-	this.productObj.showDate = true;
+	this.getDate = function(){
+		this.productObj.showDate = true;
 
-	var x = new Date();
-	this.productObj.date = x.toLocaleString();
-};
+		var x = new Date();
+		this.productObj.date = x.toLocaleString();
+	};
 
-this.isOther = function(store){
-	return store == "Other";
-};
+	this.isOther = function(store){
+		return store == "Other";
+	};
 
 });
 
