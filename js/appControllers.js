@@ -15,6 +15,9 @@
 	});
 
 	app.controller('FormController', function(){
+
+		this.tempOutObject = tempOut;
+
 		this.setValues = function(store, amount, date){
 			if(localStorage.indexed !== "0"){
 		  		localStorage.indexed = 0;
@@ -26,35 +29,42 @@
 		  	localStorage.date = date;
 		};
 
+		this.showOutput = function(){
+			var str = JSON.parse(localStorage["outputArray"]);
+
+	  		var res = str.split("%n");
+	  		var i = 0;
+	  		this.tempOutObject = [];
+	  
+	  	for (i = 1; i < res.length; i++) { 
+	  		var temp = {
+	  			store: {},
+				total: {},
+				date: {}
+			};
+	      	var x = res[i].split("%e");
+		  	temp.store = x[0];
+		  	var noComma = x[1].split(",");
+		  	temp.total = noComma[noComma.length-1];
+		  	noComma = x[2].split(",");
+		  	temp.date = noComma[noComma.length-1];
+		  	this.tempOutObject.push(temp);
+		}
+
+		};
+
 		this.addValues = function(){
 			if(localStorage.store == "undefined"){
 	    		this.showOutput();
 	    		return;
     		}
-    		if(localStorage.indexed == "undefined"){
-	    		var temp = [];
-		  		localStorage["outputArray"] = JSON.stringify(temp);
-    		}
-    		tempValues.store = localStorage.store;
-    		tempValues.amount = localStorage.amount;
-    		tempValues.date = localStorage.date;
     		
-    		var values = JSON.stringify(tempValues);
+    		tempValues.store = localStorage.store + "%e";
+    		tempValues.amount = localStorage.amount + "%e";
+    		tempValues.date = localStorage.date + "%n";
     		
-
-    		var temp = [];
-    		var i;
-    		for(i = 0; i < localStorage.getItem("outputArray").length; i++){
-    			temp[i] = JSON.parse(localStorage.getItem("outputArray"))[i];
-    		}
-    		
-
-    		var tempOld = JSON.stringify(temp);
-    		if(tempOld == "[]"){
-    			tempOld = '';
-    			localStorage.setItem("outputArray", values);
-    		}
-    		localStorage.setItem("outputArray", [values, tempOld]);
+    		var newArray = JSON.parse(localStorage["outputArray"]);
+	  		localStorage["outputArray"] = JSON.stringify(newArray + tempValues);
     		
 
 		};
@@ -73,7 +83,7 @@
 		'Panda Express','Papa Johns','Pizza Hut',
 		'Publix','Shell','Subway','Walmart'
 	];
-
+	var tempOut = [];
 	var tempValues = {
 		"store":'',
 		"amount":'',

@@ -13,28 +13,41 @@ this.getDate = function(){
 	this.productObj.date = x.toLocaleString();
 };
 
+this.isOther = function(store){
+	return store == "Other";
+};
+
 });
 
 app.controller('ReviewController', function() {
   this.review = {};
+  this.toShow = true;
   this.outputObj = localObj;
  
   
-  this.setValues = function(indexs, totals, dates){
+  this.setValues = function(indexs,others, totals, dates){
   	if(typeof(localStorage.indexing) == "undefined"){
   		localStorage.indexing = 0;
   		var t = [];
   		localStorage["testing"] = JSON.stringify(t);
   	}
+  	if(indexs == "Other"){
+  		indexs = others;
+  	}
+  	localStorage.showOutput = "true";
   	localStorage.store = indexs;
   	localStorage.total = totals;
   	localStorage.date = dates;
-  }
+  };
 
   	this.showOutput = function(){
   		
 	  	var str = JSON.parse(localStorage["testing"]);
-
+	  	if(str.length == 0){
+	  		this.outputObj = [];
+	  		return false;
+	  	
+	  	}
 	  	var res = str.split("%n");
 	  	var i = 0;
 	  	this.outputObj = [];
@@ -50,26 +63,51 @@ app.controller('ReviewController', function() {
 		  	var noComma = x[1].split(",");
 		  	temp.total = noComma[noComma.length-1];
 		  	noComma = x[2].split(",");
-		  	temp.date = noComma[noComma.length-1];
+		  	temp.date =noComma[noComma.length-2] + " " + noComma[noComma.length-1];
 		  	this.outputObj.push(temp);
 		}
-  	}
+  	};
+
   	if(localStorage.indexing == "0"){
+  		localStorage.showOutput = "true";
   		this.showOutput();
   	}
 
-    this.addReview = function(product) {
+  	this.cleanHistory = function(){
+  		var t = [];
+  		localStorage["testing"] = JSON.stringify(t);
+  		localStorage.showOutput = "true";
+  		this.showOutput();
+  	};
+
+  	this.shouldClear = function(){
+  		var str = JSON.parse(localStorage["testing"]);
+	  	if(str.length == 0){
+	  		return false;
+	  	}
+	  	if(localStorage.showOutput == "true"){
+	  		localStorage.showOutput = "false";
+	  		this.showOutput();
+	  	}
+  		return true;
+  	};
+
+  	this.addReview = function(product) {
     	if(localStorage.store == "undefined"){
     		this.showOutput();
     		return;
     	}
-    	var values = [localStorage.store + "%e", localStorage.total + "%e", localStorage.date];
+    	var values = ["%n" + localStorage.store + "%e", localStorage.total + "%e", localStorage.date];
 
   		var newArray = JSON.parse(localStorage["testing"]);
-  		localStorage["testing"] = JSON.stringify(newArray + "%n" + values);
+  		localStorage["testing"] = JSON.stringify(values + newArray );
+  		localStorage.showOutput = "true";
+  		//this.shouldClear();
 		this.showOutput();
-		location.reload();
+		//location.reload();
 	};
+
+	
 });
 
 var expensesObject = {

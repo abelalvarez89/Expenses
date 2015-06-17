@@ -10,14 +10,14 @@
 
 
 
-<h1>Expenses</h1>
 
 
 <div ng-controller="LocationController as loc">
 	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(loc.productObj)">
 	
 		<blockquote>
-			<table class="CSSTableGenerator" border="3" style="width=100%" >
+		<h2>Expenses</h2>
+			<table class="CSSTableGenerator" width= "100" border="3" >
 					<td>
 						Location
 					</td>
@@ -32,19 +32,21 @@
 						<select ng-model="store" >
 							<option ng-repeat="lc in loc.productObj.location" value="{{lc}}">{{lc}}</option>
 						</select >	
-						
+						<div  ng-show="loc.isOther(store)">
+							<input ng-model="other" type="text">
+						</div>
 					</td>
-					<td>
-						<input type="number" step="0.01" min="0" ng-model="amount"></input>
+					<td align="right">
+						<input type="number" size="5" step="0.01" min="0" ng-model="amount"></input>
 					</td>
 
 					<td>
-						<button type="button" ng-click="loc.getDate()">Today's Date</button>
+						<button type="button" ng-click="loc.getDate()">Today's-Date</button>
 				
 					</td>
 				<tr>
 					<td>
-						{{store}}
+						{{store}} {{other}}
 					</td>
 					<td>
 						{{review.amount = amount}}
@@ -56,20 +58,10 @@
 					</td>
 				</table>
 				<br></br>
-			<button type="submit" ng-click="reviewCtrl.setValues(store, amount, loc.productObj.date)">Log Purchase</button>
-		</blockquote>
-	</form>
-</div>
-
-
-<h1>
-Comments here
-</h1>
-
-
-	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl">
-	
-		<blockquote>
+			<button type="submit" ng-click="reviewCtrl.setValues(store,other, amount, loc.productObj.date)">Log Purchase</button>
+			<br></br>
+			<div ng-show="reviewCtrl.shouldClear()">
+			<h2>Purchase Items</h2>
 			<table class="CSSTableGenerator" border="3" style="width=100%" >
 					<td>
 						Location
@@ -92,8 +84,9 @@ Comments here
 					</td>
 				</tr>
 				</tbody>
-				
-				</table>
+			</table>
+			<button type="button" ng-click="reviewCtrl.cleanHistory()">Clear</button>
+		</div>
 		</blockquote>
 	</form>
 

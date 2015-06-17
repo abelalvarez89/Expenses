@@ -1,6 +1,6 @@
 .CSSTableGenerator {
 	margin:0px;padding:0px;
-	width:100%;
+	width:50%;
 	box-shadow: 10px 10px 5px #888888;
 	border:1px solid #000000;
 	
@@ -22,7 +22,7 @@
 }.CSSTableGenerator table{
     border-collapse: collapse;
         border-spacing: 0;
-	width:100%;
+	width:50%;
 	height:100%;
 	margin:0px;padding:0px;
 }.CSSTableGenerator tr:last-child td:last-child {
@@ -58,7 +58,7 @@
 
 	border:1px solid #000000;
 	border-width:0px 1px 1px 0px;
-	text-align:left;
+	text-align:center;
 	padding:15px;
 	font-size:20px;
 	font-family:Arial;
@@ -97,4 +97,7 @@
 }
 .CSSTableGenerator tr:first-child td:last-child{
 	border-width:0px 0px 1px 1px;
+}
+input[type="number"] {
+   width:50px;
 }
