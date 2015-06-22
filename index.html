@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="expenses">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses</title>
+</head>
+<body>
+<h2>Expenses</h2>
+
+<blockquote>
+	<form method="post" action="email.php">
+		<div ng-controller="EmailController as email">		
+				<button type="submit" class="btn btn-active" ><span class="glyphicon glyphicon-envelope"></span></button>
+		</div>
+	</form>
+</blockquote>
+
+<div ng-controller="LocationController as loc">
+	<form name="expensesForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(datetimes)">
+	
+			<table class="table table-striped" >
+					<thead>
+						<tr class="success">	
+							<th>
+								Location
+							</th>
+							<th>
+								Amount
+							</th>
+							<th>
+								Date
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<select ng-model="store">
+									<option ng-repeat="lc in loc.productObj.location" value="{{lc}}">{{lc}}</option>
+								</select >	
+								<br>
+								<div class="col-lg-12">
+								</div>
+								<div  ng-show="loc.isOther(store)" >
+									<input ng-model="other" class="col-md-3 col-xs-12"type="text" class="form-control" placeholder="Enter Store" aria-describedby="basic-addon2">
+								</div>
+							</td>
+							<td >
+								<input type="number"  class="col-xs-10" size="5" step="0.01" min="0" ng-model="amount"></input>
+							</td>
+
+							<td>
+								<input ng-model="datetimes" class="col-xs-7" type="datetime-local" set="Today" name="bdaytime">
+						
+							</td>
+						</tr>
+						<tr>
+							<td>
+								{{store}} {{other}}
+							</td>
+							<td>
+								{{review.amount = amount}}
+							</td>
+							<td>
+								<div ng-show = "loc.productObj.showDate">
+									{{loc.productObj.date}}
+								<div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<br></br>
+			<button class="btn btn-primary" type="submit" ng-click="reviewCtrl.setValues(store,other, amount, loc.getDate())">Log Purchase</button>
+			<br>
+			<div ng-show="reviewCtrl.shouldClear()">
+			<h2>Purchase Items</h2>
+			<input ng-model="searchItem" type="text" placeholder="Search"></input>
+			<br></br>
+			<table class="table table-striped table-bordered" >
+				<thead>
+					<tr class="warning">	
+						<th>
+							Location
+						</th>
+						<th>
+							Amount
+						</th>
+						<th>
+							Date
+						</th>
+						<th>
+							
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="rc in reviewCtrl.outputObj | filter:searchItem" >
+						<td>	
+							{{rc.store}}		
+						</td>
+						<td>
+							{{rc.total |  currency : symbol : fractionSize}}
+						</td>
+						<td>
+							{{rc.date}}				
+						</td>
+						<th>
+							<button type="button" ng-click="reviewCtrl.removeRow(rc.index)"><span class="glyphicon glyphicon-trash"></span></button>
+						</th>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<h3>Total Spent: {{reviewCtrl.sum |  currency : symbol : fractionSize}}</h3>
+			<br>
+			<button class="btn btn-danger" type="button" ng-click="reviewCtrl.cleanHistory()">Clear</button>
+		</div>
+		
+	</form>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
